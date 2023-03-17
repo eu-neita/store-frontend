@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import ListCategories from '../components/ListCategories';
 
 class Home extends Component {
   // constructor(props) {
@@ -8,6 +9,7 @@ class Home extends Component {
   render() {
     return (
       <div>
+        <ListCategories />
         <p
           data-testid="home-initial-message"
         >
