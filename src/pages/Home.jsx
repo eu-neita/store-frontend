@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import ListCategories from '../components/ListCategories';
+import Search from '../components/SearchBar';
 
 class Home extends Component {
   // constructor(props) {
@@ -10,6 +11,7 @@ class Home extends Component {
     return (
       <div>
         <ListCategories />
+        <Search />
         <p
           data-testid="home-initial-message"
         >

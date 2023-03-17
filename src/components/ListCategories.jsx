@@ -15,7 +15,6 @@ class ListCategories extends Component {
     this.setState({
       categoriesNames: arrayObgCat,
     });
-    console.log(arrayObgCat);
   };
 
   render() {
