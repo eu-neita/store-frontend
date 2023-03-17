@@ -27,7 +27,6 @@ class SearchBar extends React.Component {
       productResults: product.results,
       find: true,
     });
-    console.log(product.results);
   };
 
   render() {

@@ -10,13 +10,16 @@ class CardProduct extends Component {
 
   render() {
     const { products } = this.props;
+    console.log(products);
     const mapCardsProd = products.map((arr, i) => (
-      <div key={ i }>
+      <div key={ i } data-testid="product">
+        <img src={ arr.thumbnail } alt={ arr.title } />
         <p>{arr.title}</p>
+        <p>{ `R$ ${arr.price}` }</p>
       </div>));
     return (
       <div>
-        { mapCardsProd }
+        { products.length === 0 ? <p>Nenhum produto foi encontrado</p> : mapCardsProd}
       </div>
     );
   }
