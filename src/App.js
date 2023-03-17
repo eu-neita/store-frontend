@@ -1,6 +1,9 @@
-import { React, Component } from 'react';
+import { Component } from 'react';
 import './App.css';
+import { Switch, Route } from 'react-router-dom';
 import { getCategories, getProductsFromCategoryAndQuery } from './services/api';
+import Home from './pages/Home';
+import NotFound from './pages/NotFound';
 
 class App extends Component {
   // constructor(props) {
@@ -13,7 +16,14 @@ class App extends Component {
   }
 
   render() {
-    return (<div>Hello World!</div>);
+    return (
+      <div>
+        <Switch>
+          <Route exact path="/" component={ Home } />
+          <Route path="*" component={ NotFound } />
+        </Switch>
+      </div>
+    );
   }
 }
 
