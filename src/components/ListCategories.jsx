@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { Component } from 'react';
 import { getCategories } from '../services/api';
 
@@ -15,14 +16,20 @@ class ListCategories extends Component {
     this.setState({
       categoriesNames: arrayObgCat,
     });
-    console.log(arrayObgCat);
   };
 
   render() {
     const { categoriesNames } = this.state;
+    const { callback } = this.props;
     const categoriesMap = categoriesNames.map((arr, i) => (
       <div key={ i }>
-        <input type="radio" name={ arr.name } id={ arr.name } />
+        <input
+          type="radio"
+          id={ arr.name }
+          value={ arr.id }
+          name="input-radio"
+          onClick={ callback }
+        />
         <label data-testid="category" htmlFor={ arr.name }>{arr.name}</label>
       </div>
     ));
@@ -33,5 +40,9 @@ class ListCategories extends Component {
     );
   }
 }
+
+ListCategories.propTypes = {
+  callback: PropTypes.func.isRequired,
+};
 
 export default ListCategories;
