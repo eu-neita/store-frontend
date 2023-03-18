@@ -2,15 +2,8 @@ import { Component } from 'react';
 import { PropTypes } from 'prop-types';
 
 class CardProduct extends Component {
-  // constructor(props) {
-  //   super(props);
-  // }
-
-  state = { };
-
   render() {
     const { products } = this.props;
-    console.log(products);
     const mapCardsProd = products.map((arr, i) => (
       <div key={ i } data-testid="product">
         <img src={ arr.thumbnail } alt={ arr.title } />

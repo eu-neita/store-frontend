@@ -7,10 +7,6 @@ class SearchBar extends React.Component {
     searchValue: '',
   };
 
-  // componentDidMount() {
-  //   this.searchProductFetch();
-  // }
-
   handleSeachValue = ({ target }) => {
     const { value } = target;
     this.setState({

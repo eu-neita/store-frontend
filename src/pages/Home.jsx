@@ -5,25 +5,21 @@ import Search from '../components/SearchBar';
 import { getProductById } from '../services/api';
 
 class Home extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-      array: [],
-      isTrue: false,
-    };
-  }
+  state = {
+    arrProducts: [],
+    radioClick: false,
+  };
 
   handleClick = async ({ target }) => {
     const results = await getProductById(target.value);
     this.setState({
-      array: results,
-      isTrue: true,
+      arrProducts: results,
+      radioClick: true,
     });
   };
 
   render() {
-    const { isTrue, array } = this.state;
+    const { radioClick, arrProducts } = this.state;
     return (
       <div>
         <ListCategories callback={ this.handleClick } />
@@ -33,7 +29,7 @@ class Home extends Component {
         >
           Digite algum termo de pesquisa ou escolha uma categoria.
         </p>
-        { isTrue && <CardProduct products={ array } />}
+        { radioClick && <CardProduct products={ arrProducts } />}
       </div>
     );
   }
