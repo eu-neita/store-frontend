@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { savelocalStorage } from '../services/api';
 
 class ProductSpecification extends React.Component {
   constructor() {
@@ -18,6 +19,12 @@ class ProductSpecification extends React.Component {
       object: product,
     });
   }
+
+  handleClick = () => {
+    const { object } = this.state;
+    console.log(object);
+    savelocalStorage(object);
+  };
 
   render() {
     const { isTrue, object } = this.state;
@@ -38,6 +45,13 @@ class ProductSpecification extends React.Component {
                 data-testid="product-detail-image"
               />
             </div>
+            <button
+              type="button"
+              data-testid="product-detail-add-to-cart"
+              onClick={ this.handleClick }
+            >
+              Adicionar ao carrinho
+            </button>
           </div>
         )}
       </div>

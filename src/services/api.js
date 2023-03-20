@@ -25,3 +25,18 @@ export async function getProducts(query) {
   const data = await response.json();
   return data;
 }
+
+export const getLocalStorage = () => {
+  const getProduct = JSON.parse(localStorage.getItem('carrinho'));
+  if (getProduct) {
+    return getProduct;
+  }
+};
+
+export const savelocalStorage = (object) => {
+  const getProduct = JSON.parse(localStorage.getItem('carrinho'));
+  const arrayProducts = getProduct === null ? [] : getProduct;
+  arrayProducts.push(object);
+  localStorage.setItem('carrinho', JSON.stringify(arrayProducts));
+  console.log('oi');
+};
