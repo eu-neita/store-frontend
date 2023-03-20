@@ -3,6 +3,21 @@ import { PropTypes } from 'prop-types';
 import { Link } from 'react-router-dom';
 
 class CardProduct extends Component {
+  state = {
+    arrayCarrinho: [],
+  };
+
+  componentDidUpdate() {
+    const { arrayCarrinho } = this.state;
+    localStorage.setItem('cart', JSON.stringify(arrayCarrinho));
+  }
+
+  clickFunction = (arr) => {
+    this.setState((prev) => ({
+      arrayCarrinho: [...prev.arrayCarrinho, arr],
+    }));
+  };
+
   handleClick = (arr) => {
     window.location.pathname = '/especificacao';
     localStorage.setItem('product', JSON.stringify(arr));
@@ -22,6 +37,12 @@ class CardProduct extends Component {
         <img src={ arr.thumbnail } alt={ arr.title } />
         <p>{arr.title}</p>
         <p>{ `R$ ${arr.price}` }</p>
+        <button
+          data-testid="product-add-to-cart"
+          onClick={ () => this.clickFunction(arr) }
+        >
+          adicionar ao carrinho
+        </button>
       </div>));
     return (
       <div>
