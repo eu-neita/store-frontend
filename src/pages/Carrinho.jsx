@@ -13,14 +13,13 @@ class Carrinho extends React.Component {
   }
 
   getLocalCart() {
-    const storedArray = localStorage.getItem('cart');
+    const storedArray = localStorage.getItem('carrinho');
     const result = JSON.parse(storedArray);
     return result;
   }
 
   render() {
     const { arrayCarrinho } = this.state;
-    console.log(arrayCarrinho);
     return (
       <div>
         <h2>Carrinho</h2>
