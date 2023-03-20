@@ -9,7 +9,7 @@ class CardProduct extends Component {
 
   componentDidUpdate() {
     const { arrayCarrinho } = this.state;
-    localStorage.setItem('cart', JSON.stringify(arrayCarrinho));
+    localStorage.setItem('carrinho', JSON.stringify(arrayCarrinho));
   }
 
   clickFunction = (arr) => {
