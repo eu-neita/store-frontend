@@ -22,7 +22,7 @@ class ProductSpecification extends React.Component {
 
   handleClick = () => {
     const { object } = this.state;
-    console.log(object);
+    object.quanty = 1;
     savelocalStorage(object);
   };
 
