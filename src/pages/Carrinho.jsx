@@ -34,17 +34,19 @@ class Carrinho extends React.Component {
       });
       return;
     }
-    product.quanty = Number(product.quanty) + 1;
-    const objectFilter = arrayNewCarrinho.find((elemento, index) => {
-      position = index;
-      return elemento.title === product.title;
-    });
-    arrayNewCarrinho[position].quanty = product.quanty;
-    objectFilter.quanty = product.quanty;
-    localStorage.setItem('carrinho', JSON.stringify(arrayNewCarrinho));
-    this.setState({
-      arrayCarrinho: arrayNewCarrinho,
-    });
+    if (arrayNewCarrinho[position].available_quantity > product.quanty) {
+      product.quanty = Number(product.quanty) + 1;
+      const objectFilter = arrayNewCarrinho.find((elemento, index) => {
+        position = index;
+        return elemento.title === product.title;
+      });
+      arrayNewCarrinho[position].quanty = product.quanty;
+      objectFilter.quanty = product.quanty;
+      localStorage.setItem('carrinho', JSON.stringify(arrayNewCarrinho));
+      return this.setState({
+        arrayCarrinho: arrayNewCarrinho,
+      });
+    }
   };
 
   handleRemove = (product) => {
