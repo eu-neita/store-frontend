@@ -3,14 +3,10 @@ import { Link } from 'react-router-dom';
 import { savelocalStorage } from '../services/api';
 
 class ProductSpecification extends React.Component {
-  constructor() {
-    super();
-
-    this.state = {
-      isTrue: false,
-      object: {},
-    };
-  }
+  state = {
+    isTrue: false,
+    object: {},
+  };
 
   async componentDidMount() {
     const product = JSON.parse(localStorage.getItem('product'));
@@ -19,6 +15,10 @@ class ProductSpecification extends React.Component {
       object: product,
     });
   }
+
+  handleSubmit = () => {
+    
+  };
 
   handleClick = () => {
     const { object } = this.state;
@@ -52,6 +52,48 @@ class ProductSpecification extends React.Component {
             >
               Adicionar ao carrinho
             </button>
+            <div id="formulario">
+              <label>
+                <input
+                  data-testid="product-detail-email"
+                  type="email"
+                  placeholder="email"
+                  required
+                />
+              </label>
+              <label htmlFor="nota1">
+                <input data-testid="1-rating" id="nota1" type="radio" name="nota" />
+                1
+              </label>
+              <label htmlFor="nota2">
+                <input data-testid="2-rating" type="radio" id="nota2" name="nota" />
+                2
+              </label>
+              <label htmlFor="nota3">
+                <input data-testid="3-rating" id="nota3" type="radio" name="nota" />
+                3
+              </label>
+              <label htmlFor="nota4">
+                <input data-testid="4-rating" id="nota4" type="radio" name="nota" />
+                4
+              </label>
+              <label htmlFor="nota5">
+                <input data-testid="5-rating" id="nota5" type="radio" name="nota" />
+                5
+              </label>
+              <label>
+                <input type="text" data-testid="product-detail-evaluation" />
+              </label>
+              <br />
+              <label>
+                <input
+                  onClick={ this.handleSubmit }
+                  type="submit"
+                  data-testid="submit-review-btn"
+                  value="Enviar"
+                />
+              </label>
+            </div>
           </div>
         )}
       </div>
