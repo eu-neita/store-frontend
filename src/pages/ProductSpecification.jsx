@@ -10,15 +10,28 @@ class ProductSpecification extends React.Component {
     text: '',
     radioValue: 0,
     emailValidate: false,
+    comments: [],
   };
 
   async componentDidMount() {
     const product = JSON.parse(localStorage.getItem('product'));
+    this.storage(product);
     this.setState({
       isTrue: true,
       object: product,
     });
   }
+
+  storage = (product) => {
+    const getStorage = JSON.parse(localStorage.getItem(product.id));
+    if (getStorage === null) {
+      localStorage.setItem(product.id, JSON.stringify([]));
+    } else {
+      this.setState({
+        comments: getStorage,
+      });
+    }
+  };
 
   textHandleInputs = ({ target }) => {
     const { value, name } = target;
@@ -32,13 +45,21 @@ class ProductSpecification extends React.Component {
     const mailformat = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
     const MIN_RADIO_VALUE = 0;
     if (email.match(mailformat) && MIN_RADIO_VALUE < radioValue) {
-      const objectSaveLocal = [{
+      const objectSaveLocal = {
         email,
         text,
         rating: radioValue,
-      }];
-      localStorage.setItem(object.id, JSON.stringify(objectSaveLocal));
-      return this.setState({ emailValidate: false });
+      };
+      const getStorage = JSON.parse(localStorage.getItem(object.id));
+      const array = [...getStorage, objectSaveLocal];
+      localStorage.setItem(object.id, JSON.stringify(array));
+      return this.setState({
+        emailValidate: false,
+        comments: array,
+        email: '',
+        text: '',
+        radioValue: 0,
+      });
     }
     this.setState({ emailValidate: true });
   };
@@ -50,7 +71,7 @@ class ProductSpecification extends React.Component {
   };
 
   render() {
-    const { isTrue, object, email, text, emailValidate } = this.state;
+    const { isTrue, object, email, text, emailValidate, comments } = this.state;
     return (
       <div>
         { !isTrue && <h1>Carregando...</h1>}
@@ -161,6 +182,13 @@ class ProductSpecification extends React.Component {
               </label>
               {emailValidate && <p data-testid="error-msg">Campos inválidos</p>}
             </div>
+            {comments.map((comment, index) => (
+              <div key={ index }>
+                <p data-testid="review-card-email">{comment.email}</p>
+                <span data-testid="review-card-rating">{comment.rating}</span>
+                <p data-testid="review-card-evaluation">{comment.text}</p>
+              </div>
+            ))}
           </div>
         )}
       </div>
