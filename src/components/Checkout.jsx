@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class Checkout extends React.Component {
   state = {
@@ -37,11 +38,13 @@ class Checkout extends React.Component {
       cep.length,
       endereco.length,
     ];
+    const { history } = this.props;
     const validation = array.every((element) => element > 1);
     if (radio > 0 && validation) {
       this.setState({
         isTrue: false,
       });
+      history.push('/');
       localStorage.clear();
       return;
     }
@@ -194,5 +197,11 @@ class Checkout extends React.Component {
     );
   }
 }
+
+Checkout.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
 
 export default Checkout;
