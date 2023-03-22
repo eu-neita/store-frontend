@@ -10,38 +10,61 @@ class Checkout extends React.Component {
     telefone: '',
     cep: '',
     endereco: '',
-    buttonCheck: true,
+    arrayStorage: [],
   };
+
+  componentDidMount() {
+    const storage = JSON.parse(localStorage.getItem('carrinho'));
+    this.setState({
+      arrayStorage: storage,
+    });
+  }
 
   handleChange = ({ target }) => {
     const { value, name } = target;
     this.setState({
       [name]: value,
     });
-    const { email } = this.state;
-    console.log(email);
   };
 
   handleClick = () => {
-    const { radio } = this.state;
-    if (radio < 1) {
+    const { radio, nome, email, cpf, telefone, cep, endereco } = this.state;
+    const array = [
+      nome.length,
+      email.length,
+      cpf.length,
+      telefone.length,
+      cep.length,
+      endereco.length,
+    ];
+    const validation = array.every((element) => element > 1);
+    if (radio > 0 && validation) {
       this.setState({
-        isTrue: true,
+        isTrue: false,
       });
+      localStorage.clear();
       return;
     }
     this.setState({
-      isTrue: false,
+      isTrue: true,
     });
   };
 
   render() {
-    const storage = JSON.parse(localStorage.getItem('carrinho'));
-    const { isTrue, email, nome, cpf, telefone, cep, endereco, buttonCheck } = this.state;
+    const {
+      isTrue,
+      email,
+      nome,
+      cpf,
+      telefone,
+      cep,
+      endereco,
+      arrayStorage,
+    } = this.state;
     return (
       <div>
         {(
-          storage.map((product, index) => (
+          arrayStorage.map((product, index) => (
             <p key={ index }>{product.title}</p>
           ))
         )}
@@ -119,6 +142,7 @@ class Checkout extends React.Component {
               type="radio"
               name="radio"
               value={ 1 }
+              data-testid="ticket-payment"
               onChange={ this.handleChange }
               id="radio-1"
             />
@@ -129,6 +153,7 @@ class Checkout extends React.Component {
               type="radio"
               name="radio"
               value={ 2 }
+              data-testid="visa-payment"
               onChange={ this.handleChange }
               id="radio-2"
             />
@@ -139,6 +164,7 @@ class Checkout extends React.Component {
               type="radio"
               name="radio"
               value={ 3 }
+              data-testid="master-payment"
               onChange={ this.handleChange }
               id="radio-3"
             />
@@ -149,6 +175,7 @@ class Checkout extends React.Component {
               type="radio"
               name="radio"
               value={ 4 }
+              data-testid="elo-payment"
               onChange={ this.handleChange }
               id="radio-4"
             />
@@ -157,7 +184,6 @@ class Checkout extends React.Component {
             type="button"
             data-testid="checkout-btn"
             onClick={ this.handleClick }
-            disabled={ buttonCheck }
           >
             Finalizar Compra
 
