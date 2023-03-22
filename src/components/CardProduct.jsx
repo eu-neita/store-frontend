@@ -7,9 +7,13 @@ class CardProduct extends Component {
     arrayCarrinho: [],
   };
 
-  componentDidUpdate() {
+  componentDidUpdate(_prevProps, prevState) {
     const { arrayCarrinho } = this.state;
     localStorage.setItem('carrinho', JSON.stringify(arrayCarrinho));
+    if (prevState.arrayCarrinho.length < arrayCarrinho.length) {
+      const { callback } = this.props;
+      callback();
+    }
   }
 
   clickFunction = (arr) => {
@@ -18,10 +22,16 @@ class CardProduct extends Component {
     } else {
       arr.quanty = Number(arr.quanty) + 1;
     }
-    console.log(arr.quanty);
-    this.setState((prev) => ({
-      arrayCarrinho: [...prev.arrayCarrinho, arr],
-    }));
+    const getArrayStorage = JSON.parse(localStorage.getItem('carrinho'));
+    if (getArrayStorage === null) {
+      this.setState((prev) => ({
+        arrayCarrinho: [...prev.arrayCarrinho, arr],
+      }));
+    } else {
+      this.setState({
+        arrayCarrinho: [...getArrayStorage, arr],
+      });
+    }
   };
 
   handleClick = (arr) => {
@@ -62,7 +72,8 @@ class CardProduct extends Component {
 }
 
 CardProduct.propTypes = {
-  products: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  callback: PropTypes.func.isRequired,
+  products: PropTypes.arrayOf().isRequired,
 };
 
 export default CardProduct;
