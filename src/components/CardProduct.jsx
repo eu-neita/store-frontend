@@ -13,6 +13,12 @@ class CardProduct extends Component {
   }
 
   clickFunction = (arr) => {
+    if (!arr.quanty) {
+      arr.quanty = 1;
+    } else {
+      arr.quanty = Number(arr.quanty) + 1;
+    }
+    console.log(arr.quanty);
     this.setState((prev) => ({
       arrayCarrinho: [...prev.arrayCarrinho, arr],
     }));

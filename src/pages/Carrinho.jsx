@@ -13,10 +13,48 @@ class Carrinho extends React.Component {
   }
 
   getLocalCart() {
-    const storedArray = localStorage.getItem('carrinho');
-    const result = JSON.parse(storedArray);
+    const result = JSON.parse(localStorage.getItem('carrinho'));
     return result;
   }
+
+  handleClick = (product, decreaseOrIncrease) => {
+    const { arrayCarrinho: arrayNewCarrinho } = this.state;
+    let position = 0;
+    if (decreaseOrIncrease === '-') {
+      product.quanty = Number(product.quanty) <= 1 ? 1 : Number(product.quanty) - 1;
+      const objectFilter = arrayNewCarrinho.find((elemento, index) => {
+        position = index;
+        return elemento.title === product.title;
+      });
+      arrayNewCarrinho[position].quanty = product.quanty;
+      objectFilter.quanty = product.quanty;
+      localStorage.setItem('carrinho', JSON.stringify(arrayNewCarrinho));
+      this.setState({
+        arrayCarrinho: arrayNewCarrinho,
+      });
+      return;
+    }
+    product.quanty = Number(product.quanty) + 1;
+    const objectFilter = arrayNewCarrinho.find((elemento, index) => {
+      position = index;
+      return elemento.title === product.title;
+    });
+    arrayNewCarrinho[position].quanty = product.quanty;
+    objectFilter.quanty = product.quanty;
+    localStorage.setItem('carrinho', JSON.stringify(arrayNewCarrinho));
+    this.setState({
+      arrayCarrinho: arrayNewCarrinho,
+    });
+  };
+
+  handleRemove = (product) => {
+    const storedArray = JSON.parse(localStorage.getItem('carrinho'));
+    const newArray = storedArray.filter((prod) => prod.title !== product.title);
+    this.setState({
+      arrayCarrinho: newArray.length === 0 ? null : newArray,
+    });
+    localStorage.setItem('carrinho', JSON.stringify(newArray));
+  };
 
   render() {
     const { arrayCarrinho } = this.state;
@@ -31,9 +69,30 @@ class Carrinho extends React.Component {
               <img src={ product.thumbnail } alt={ product.title } />
               <p>{product.title}</p>
               <p>{`R$ ${product.price}`}</p>
+              <button
+                onClick={ () => this.handleClick(product, '-') }
+                data-testid="product-decrease-quantity"
+                type="button"
+              >
+                -
+              </button>
               <p data-testid="shopping-cart-product-quantity">
-                1
+                { product.quanty }
               </p>
+              <button
+                onClick={ () => this.handleClick(product, '+') }
+                data-testid="product-increase-quantity"
+                type="button"
+              >
+                +
+              </button>
+              <button
+                type="button"
+                onClick={ () => this.handleRemove(product) }
+                data-testid="remove-product"
+              >
+                remover
+              </button>
             </div>
           ))
         )}
