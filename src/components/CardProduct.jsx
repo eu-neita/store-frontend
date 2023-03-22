@@ -40,6 +40,9 @@ class CardProduct extends Component {
         >
           Detalhes
         </Link>
+        {arr.shipping.free_shipping && (
+          <p data-testid="free-shipping">Frete Grátis</p>
+        )}
         <img src={ arr.thumbnail } alt={ arr.title } />
         <p>{arr.title}</p>
         <p>{ `R$ ${arr.price}` }</p>
